@@ -32,6 +32,7 @@
     "dotenv": "^4.0.0",
     "fs-extra": "^4.0.2",
     "lodash": "^4.17.4",
+    "recursive-readdir": "^2.2.1",
     "shortid": "^2.2.8",
     "sqlite3": "^3.1.13",
     "superagent": "^3.5.2",

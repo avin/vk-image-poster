@@ -2,6 +2,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import * as _ from 'lodash';
 import config from '../config';
+import recursiveReaddir from "recursive-readdir";
 
 export default class Publisher {
     constructor(options) {
@@ -25,7 +26,7 @@ export default class Publisher {
     }
 
     async publish() {
-        let images = await fs.readdir(path.join('storage', 'images'));
+        let images = await recursiveReaddir(path.join('storage', 'images'));
         images = _.shuffle(images);
 
         for (const fileName of images) {
@@ -34,7 +35,7 @@ export default class Publisher {
             }
             const imagePosted = await this.db.isPostedImageExist(fileName);
             if (!imagePosted) {
-                await this._postImage(path.join('storage', 'images', fileName));
+                await this._postImage(fileName);
                 await this.db.insertPostedImage(fileName);
                 break;
             }
